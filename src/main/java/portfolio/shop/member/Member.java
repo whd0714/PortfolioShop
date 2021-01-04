@@ -32,6 +32,8 @@ public class Member {
     private LocalDateTime joinAt;
     private String uuid;
     private int level;
+    private int point;
+    private int reserve;
 
     public Member(String loginId, String username, String password, String email) {
         this.loginId = loginId;
@@ -43,6 +45,8 @@ public class Member {
     public void settingSignUp() {
         this.joinAt = LocalDateTime.now();
         this.level = 1;
+        this.point = 1000;
+        this.reserve = 0;
     }
 
 }

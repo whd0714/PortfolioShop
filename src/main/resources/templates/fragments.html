@@ -7,6 +7,7 @@
     <title>Title</title>
 
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -17,7 +18,7 @@
     <div th:fragment="main-nav">
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" style="color: white;" href="#">PortFolioShop</a>
+                <a class="navbar-brand" style="color: white;" th:href="@{/}">PortFolioShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,7 +53,7 @@
         </nav>
     </div>
 
-    <div th:fragment="login-nav" class="pl-5 pt-3">
+    <div th:fragment="login-nav" class="pl-5 pt-3" style="font-size: 14px;">
         <ul class="nav" sec:authorize="!isAuthenticated()">
             <li class="nav-item">
                     <a class="nav-link btn btn-outline-dark pl-5 pr-5"  style="font-size: 13px;" type="button" aria-current="page" th:href="@{/login}">
@@ -60,24 +61,73 @@
                     </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/sign-up}">회원가입</a>
+                <a class="nav-link" style="color: black;" th:href="@{/sign-up}">회원가입</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12px; color: black;" href="#">비밀번호 찾기</a>
+                <a class="nav-link" style="color: black;" href="#">비밀번호 찾기</a>
             </li>
         </ul>
         <ul class="nav" sec:authorize="isAuthenticated()">
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/#}">
-                    <span sec:authentication="name"></span>
+                <a class="nav-link" style="color: black;" th:href="@{/#}">
+                    <strong>
+                        <p>
+                          Lv.<span th:text="${member.level}"></span> <span th:text="${member.username}"></span> 님
+                        </p>
+                    </strong>
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:black;" th:href="@{/notification}">알림</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:black;" th:href="@{/myPage}">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" style="color: black" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    활동정보
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" th:href="@{/myPage/point}">포인트</a>
+                    <a class="dropdown-item" style="color:blue;" th:text="${member.point}"></a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/board}">작성글</a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/comment}">작성코멘트</a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/scrap}">스크랩</a>
+                    <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
+                        <button class="dropdown-item" type="submit">로그아웃</button>
+                    </form>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" style="color: black" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    쇼핑정보
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" th:href="@{/myPage/reserve}">적립금</a>
+                    <a class="dropdown-item" style="color:blue;" th:text="${member.reserve}"></a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/order_list}">주문내역</a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/coupon}">쿠폰</a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/review}">구매후기</a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/delivery}">배송지관리</a>
+                    <a class="dropdown-item" href="#" th:href="@{/myPage/mysize}">마이사이즈</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color: red;" th:href="@{/myPage/like}">
+                    <i class="fa fa-gratipay"></i> 좋아요
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:black;" th:href="@{/cart}">장바구니</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/sign-up}">회원가입</a>
             </li>
             <li class="nav-item">
-                <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
-                    <button class="btn" type="submit">로그아웃</button>
+                <form class="form-inline" action="#" th:action="@{/logout}" method="post">
+                    <button class="btn btn-sm" type="submit">로그아웃</button>
                 </form>
             </li>
         </ul>
