@@ -32,11 +32,11 @@ public class MemberController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid MemberSignUpDto memberSignUpDto, Errors errors, Model model) {
+    public String signUp(@Valid MemberSignUpDto memberSignUpDto, Errors errors) {
         if(errors.hasErrors()) {
             return "member/sign-up";
-        }
 
+        }
         memberService.processSignup(memberSignUpDto);
 
         return "redirect:/";

@@ -39,7 +39,7 @@ public class MemberService implements UserDetailsService {
 
     public void login(Member member) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                member.getLoginId(),
+                new UserMember(member),
                 member.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
 

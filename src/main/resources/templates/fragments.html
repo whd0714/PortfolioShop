@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+    <div th:fragment="main-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" style="color: white;" href="#">PortFolioShop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div th:fragment="login-nav" class="pl-5 pt-3">
+        <ul class="nav" sec:authorize="!isAuthenticated()">
+            <li class="nav-item">
+                    <a class="nav-link btn btn-outline-dark pl-5 pr-5"  style="font-size: 13px;" type="button" aria-current="page" href="#">
+                        <strong>로그인</strong>
+                    </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/sign-up}">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 12px; color: black;" href="#">비밀번호 찾기</a>
+            </li>
+        </ul>
+        <ul class="nav" sec:authorize="isAuthenticated()">
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/#}">
+                    <span sec:authentication="name"></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/sign-up}">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 12px; color: black;" href="#">비밀번호 찾기</a>
+            </li>
+        </ul>
+    </div>
+
+    <script type="application/javascript" th:fragment="form-validation">
+        (function () {
+            'use strict';
+
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+
+                // Loop over them and prevent submission
+                Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            }, false)
+        }())
+    </script>
+
+</body>
+</html>
