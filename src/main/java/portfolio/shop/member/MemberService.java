@@ -30,7 +30,7 @@ public class MemberService implements UserDetailsService {
                 .password(password)
                 .email(memberSignUpDto.getEmail())
                 .build();
-        member.settingJoinTime();
+        member.settingSignUp();
 
         memberRepository.save(member);
 

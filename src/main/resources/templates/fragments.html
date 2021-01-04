@@ -10,6 +10,8 @@
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+    <style>
+    </style>
 </head>
 <body>
     <div th:fragment="main-nav">
@@ -45,7 +47,6 @@
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </nav>
@@ -54,7 +55,7 @@
     <div th:fragment="login-nav" class="pl-5 pt-3">
         <ul class="nav" sec:authorize="!isAuthenticated()">
             <li class="nav-item">
-                    <a class="nav-link btn btn-outline-dark pl-5 pr-5"  style="font-size: 13px;" type="button" aria-current="page" href="#">
+                    <a class="nav-link btn btn-outline-dark pl-5 pr-5"  style="font-size: 13px;" type="button" aria-current="page" th:href="@{/login}">
                         <strong>로그인</strong>
                     </a>
             </li>
@@ -75,7 +76,9 @@
                 <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/sign-up}">회원가입</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12px; color: black;" href="#">비밀번호 찾기</a>
+                <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
+                    <button class="btn" type="submit">로그아웃</button>
+                </form>
             </li>
         </ul>
     </div>
