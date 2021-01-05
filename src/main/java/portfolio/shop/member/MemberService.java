@@ -24,12 +24,7 @@ public class MemberService implements UserDetailsService {
 
     public void processSignup(MemberSignUpDto memberSignUpDto) {
         String password = passwordEncoder.encode(memberSignUpDto.getPassword());
-        Member member = Member.builder()
-                .loginId(memberSignUpDto.getLoginId())
-                .username(memberSignUpDto.getUsername())
-                .password(password)
-                .email(memberSignUpDto.getEmail())
-                .build();
+        Member member = new Member(memberSignUpDto.getLoginId(), memberSignUpDto.getUsername(), password, memberSignUpDto.getEmail());
         member.settingSignUp();
 
         memberRepository.save(member);

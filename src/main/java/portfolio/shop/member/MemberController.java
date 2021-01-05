@@ -41,5 +41,14 @@ public class MemberController {
 
         return "redirect:/";
     }
+    
+    @GetMapping("/myPage")
+    public String myPageForm(@CurrentUser Member member, Model model) {
+        if (member != null) {
+            model.addAttribute("member",member);
+        }
+
+        return "member/myPage";
+    }
 
 }

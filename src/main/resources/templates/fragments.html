@@ -8,15 +8,17 @@
 
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
 
     <style>
     </style>
 </head>
 <body>
     <div th:fragment="main-nav">
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="line-height: 40px">
             <div class="container-fluid">
                 <a class="navbar-brand" style="color: white;" th:href="@{/}">PortFolioShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,30 +26,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control me-2" type="search" aria-label="Search">
                     </form>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>
@@ -69,7 +49,7 @@
         </ul>
         <ul class="nav" sec:authorize="isAuthenticated()">
             <li class="nav-item">
-                <a class="nav-link" style="color: black;" th:href="@{/#}">
+                <a class="nav-link" style="color: black;" th:href="@{/myPage/setting}">
                     <strong>
                         <p>
                           Lv.<span th:text="${member.level}"></span> <span th:text="${member.username}"></span> 님
@@ -123,15 +103,51 @@
                 <a class="nav-link" style="color:black;" th:href="@{/cart}">장바구니</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12px; color: black;" th:href="@{/sign-up}">회원가입</a>
-            </li>
-            <li class="nav-item">
                 <form class="form-inline" action="#" th:action="@{/logout}" method="post">
                     <button class="btn btn-sm" type="submit">로그아웃</button>
                 </form>
             </li>
         </ul>
     </div>
+
+    <div th:fragment="myPage-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="line-height: 50px">
+            <div class="container-fluid">
+                <a class="navbar-brand ml-5" style="color: white;" th:href="@{/myPage}">My Page(이미지 삽입 필요)</a>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;" th:href="@{/cart}">장바구니</a>
+                        </li>
+                        <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
+                            <button class="dropdown-item" type="submit" style="color: white; background: none;">로그아웃</button>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div th:fragment="myPage-setting-nav" class="pl-5 pt-3 bg-dark " style="line-height: 200px;">
+            <div class="row" style="line-height: 60px">
+                <div class="col-xs-1">
+                    <svg data-jdenticon-value="user127" width="170" height="170">
+                        Fallback text or image for browsers not supporting inline svg.
+                    </svg>
+                </div>
+                <div class="col-xs-10">
+                    <strong>
+                        <p th:text="${member.username}" style="font-size: 60px">
+                        </p>
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script type="application/javascript" th:fragment="form-validation">
         (function () {
