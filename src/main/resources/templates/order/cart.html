@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+</head>
+<body>
+
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments.html :: login-nav"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                {카테고리 자리}
+            </div>
+            <div class="col-10">
+                <div>
+                    Order / Payment
+                </div>
+
+                <hr class="my-2">
+
+                <div class="row">
+                    <h2>{장바구니 이미지}</h2>
+                </div>
+
+                <hr class="my-2">
+
+                <div class="row">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <td>
+                                    번호
+                                </td>
+                                <td>
+                                    상품명(옵션)
+                                </td>
+                                <td>
+                                    판매가
+                                </td>
+                                <td>
+                                    수량
+                                </td>
+                                <td>
+                                    주문금액
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+    </script>
+
+</body>
+</html>
