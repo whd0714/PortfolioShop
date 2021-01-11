@@ -3,6 +3,7 @@ package portfolio.shop.order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import portfolio.shop.cart.Cart;
 import portfolio.shop.delivery.Delivery;
 import portfolio.shop.member.Member;
 import portfolio.shop.orderItem.OrderItem;
@@ -40,9 +41,22 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    public Order(OrderItem orderItem) {
+    public Order(OrderItem orderItem, Member member) {
+        this.member = member;
         settingOrder(orderItem);
         addDeliveryPrice();
+    }
+
+    private void addOrderItem(OrderItem orderItem){
+        orderItem.changeOrder(this);
+        orderItems.add(orderItem);
+    }
+
+    public void changeOrderItem(OrderItem... orderItems) {
+        for (OrderItem orderItem : orderItems) {
+            this.addOrderItem(orderItem);
+            orderItem.changeOrder(this);
+        }
     }
 
     private void addDeliveryPrice() {
@@ -50,8 +64,8 @@ public class Order {
     }
 
     public void settingOrder(OrderItem orderItem) {
-        this.count = count + orderItem.getCount();
-        this.orderPrice = orderPrice + orderItem.getOrderPrice();
+        this.count = this.count + orderItem.getCount();
+        this.orderPrice = this.orderPrice + orderItem.getOrderPrice();
         addPrice();
     }
 
@@ -60,5 +74,10 @@ public class Order {
             deliveryPrice = 3000;
         }
     }
+
+    public void singleOrderItemPrice(OrderItem orderItem) {
+
+    }
+
 
 }

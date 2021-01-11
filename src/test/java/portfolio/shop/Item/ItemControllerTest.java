@@ -16,4 +16,9 @@ class ItemControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Test
+    public void addItem(){
+
+    }
+
 }

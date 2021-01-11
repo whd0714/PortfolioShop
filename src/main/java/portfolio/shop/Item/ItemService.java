@@ -14,13 +14,15 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public Long addItem(ItemFormDto itemFormDto) {
+
+
+ /*   public Long addItem(ItemFormDto itemFormDto) {
         Item item = new Item(itemFormDto.getBrandName(), itemFormDto.getItemName(), itemFormDto.getCount(), itemFormDto.getPrice(),
                 itemFormDto.getItemImg() ,itemFormDto.getItemSize(), itemFormDto.getItemType());
 
         Item save = itemRepository.save(item);
 
         return save.getId();
-    }
+    }*/
 
 }

@@ -3,10 +3,7 @@ package portfolio.shop.cart;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import portfolio.shop.Item.Goods;
 import portfolio.shop.member.Member;
-import portfolio.shop.order.Order;
-import portfolio.shop.orderItem.OrderItem;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,7 +21,7 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart")
-    private List<OrderItem> orderItems = new ArrayList<>();
+    public List<CartGoods> cartGoodsList = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -33,4 +30,10 @@ public class Cart {
     public Cart(Member member) {
         this.member = member;
     }
+
+    public void removeCartGoods(CartGoods... cartGoods) {
+        cartGoodsList.remove(cartGoods);
+    }
+
+
 }

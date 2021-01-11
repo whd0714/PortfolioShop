@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import portfolio.shop.cart.Cart;
+import portfolio.shop.cart.CartRepository;
 import portfolio.shop.member.dto.MemberSignUpDto;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
 
     public void processSignup(MemberSignUpDto memberSignUpDto) {
         String password = passwordEncoder.encode(memberSignUpDto.getPassword());
@@ -29,7 +32,13 @@ public class MemberService implements UserDetailsService {
 
         memberRepository.save(member);
 
+        createCart(member);
         login(member);
+    }
+
+    public void createCart(Member member) {
+        Cart cart = new Cart(member);
+        cartRepository.save(cart);
     }
 
     public void login(Member member) {

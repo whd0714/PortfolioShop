@@ -8,6 +8,48 @@
 
     <div th:replace="fragments.html :: login-nav"></div>
 
+<!--    <div class="container">
+        <div class="row">
+            <div th:each="items : ${goodsList}">
+                <a th:href="@{'/goods/'+${items.getId()}}">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span th:text="${items.getItem().getItemName()}"></span>
+                            </h5>
+                            <p class="card-text">
+                                <span th:text="${items.getItem().getItemName()}"></span>
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="container">
+        <div class="row">
+            <div th:each="items : ${allItem}">
+                <a th:href="@{'/goods/'+${items.getId()}}">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span th:text="${items.getBrandName()}"></span>
+                            </h5>
+                            <p class="card-text">
+                                <span th:text="${items.getItemName()}"></span>
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!--
     nav-tab
     <div>

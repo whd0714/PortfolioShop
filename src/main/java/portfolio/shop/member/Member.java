@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import portfolio.shop.cart.Cart;
+import portfolio.shop.delivery.Address;
 import portfolio.shop.order.Order;
 
 import javax.persistence.*;
@@ -31,6 +33,11 @@ public class Member {
     private String email;
     private LocalDateTime joinAt;
     private String profileImg;
+
+    private Address address;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
+    private Cart cart;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();

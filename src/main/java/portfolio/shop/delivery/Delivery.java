@@ -13,9 +13,7 @@ public class Delivery {
     @Column(name = "delivery_id")
     private Long id;
 
-    private String zipcode;
-    private String city;
-    private String street;
+    private Address address;
 
     @OneToOne(mappedBy = "delivery", fetch = LAZY)
     private Order order;

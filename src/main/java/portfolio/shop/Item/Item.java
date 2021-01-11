@@ -3,11 +3,11 @@ package portfolio.shop.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import portfolio.enumType.ItemSize;
 import portfolio.enumType.ItemType;
-import portfolio.shop.Item.dto.ItemFormDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,27 +20,25 @@ public class Item {
 
     private String brandName;
     private String itemName;
-    private int count;
-    private int price;
     private String itemImg;
-
-    @Enumerated(EnumType.STRING)
-    private ItemSize itemSize;
+    private int price;
+    private String title;
 
     @Enumerated(EnumType.STRING)
     private ItemType itemType;
 
-    public Item(String itemName){
-        this(null, itemName, 0, 0 , null, null ,null);
-    }
+    @OneToMany(mappedBy = "item")
+    private List<Goods> goods = new ArrayList<>();
 
-    public Item(String brandName, String itemName, int count, int price, String ItemImg, ItemSize itemSize, ItemType itemType) {
+    public Item(String brandName, String itemName, String itemImg, ItemType itemType, int price, String title) {
         this.brandName = brandName;
         this.itemName = itemName;
-        this.count = count;
-        this.price = price;
-        this.itemImg = ItemImg;
-        this.itemSize = itemSize;
+        this.itemImg = itemImg;
         this.itemType = itemType;
+        this.price = price;
+        this.title = title;
     }
+
+
+
 }

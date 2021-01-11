@@ -14,6 +14,25 @@
     <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
 
     <style>
+       .breadcrumb-item+.breadcrumb-item::before { content: ">  ";     }
+       .bc-icons .breadcrumb-item + .breadcrumb-item::before {
+           content: "/";}
+       .s1{
+           background: none;
+       }
+       .s2{
+           color: red;
+       }
+       .breadcrumb {
+           padding: 2px 15px !important;
+           font-size: 13px;
+       }
+       .s3{
+           font-size: 18px;
+       }
+       .s4{
+           padding-left: 5px;
+       }
     </style>
 </head>
 <body>
@@ -29,21 +48,30 @@
                         <input class="form-control me-2" type="search" aria-label="Search">
                     </form>
                 </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white;" th:href="@{/goods/add}">아이템 추가</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </div>
 
+
+
     <div th:fragment="login-nav" class="pl-5 pt-3" style="font-size: 14px;">
         <ul class="nav" sec:authorize="!isAuthenticated()">
             <li class="nav-item">
-                    <a class="nav-link btn btn-outline-dark pl-5 pr-5"  style="font-size: 13px;" type="button" aria-current="page" th:href="@{/login}">
-                        <strong>로그인</strong>
-                    </a>
+                <a class="nav-link btn btn-outline-dark pl-5 pr-5"  style="font-size: 13px;" type="button" aria-current="page" th:href="@{/login}">
+                    <strong>로그인</strong>
+                </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" style="color: black;" th:href="@{/sign-up}">회원가입</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" style="color: black;" href="#">비밀번호 찾기</a>
             </li>
         </ul>
@@ -52,13 +80,31 @@
                 <a class="nav-link" style="color: black;" th:href="@{/myPage/setting}">
                     <strong>
                         <p>
-                          Lv.<span th:text="${member.level}"></span> <span th:text="${member.username}"></span> 님
+                             <span th:text="${member.userName}"></span> 님
                         </p>
                     </strong>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" style="color:black;" th:href="@{/notification}">알림</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" style="color: black" href="#" id="noticationId" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bell"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#" th:href="@{/#}" th:if="${orderList != null}">
+                        <div th:each="order : ${orderList}">
+                            <p></p>
+                            <span th:each="orderItem : ${order.getOrderItems()}">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span th:text="${orderItem.getGoods().getItem().getItemName()}"></span> 주문이 완료되었습니다.
+                            </span>
+                            <hr class="my-2">
+                        </div>
+                        <div>
+                            <a th:href="@{/myPage}">전체보기</a>
+                        </div>
+                    </a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" style="color:black;" th:href="@{/myPage}">마이페이지</a>
@@ -69,8 +115,8 @@
                     활동정보
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" th:href="@{/myPage/point}">포인트</a>
-                    <a class="dropdown-item" style="color:blue;" th:text="${member.point}"></a>
+<!--                    <a class="dropdown-item" th:href="@{/myPage/point}">포인트</a>
+                    <a class="dropdown-item" style="color:blue;" th:text="${member.point}"></a>-->
                     <a class="dropdown-item" href="#" th:href="@{/myPage/board}">작성글</a>
                     <a class="dropdown-item" href="#" th:href="@{/myPage/comment}">작성코멘트</a>
                     <a class="dropdown-item" href="#" th:href="@{/myPage/scrap}">스크랩</a>
@@ -85,8 +131,8 @@
                     쇼핑정보
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" th:href="@{/myPage/reserve}">적립금</a>
-                    <a class="dropdown-item" style="color:blue;" th:text="${member.reserve}"></a>
+<!--                    <a class="dropdown-item" th:href="@{/myPage/reserve}">적립금</a>
+                    <a class="dropdown-item" style="color:blue;" th:text="${member.reserve}"></a>-->
                     <a class="dropdown-item" href="#" th:href="@{/myPage/order_list}">주문내역</a>
                     <a class="dropdown-item" href="#" th:href="@{/myPage/coupon}">쿠폰</a>
                     <a class="dropdown-item" href="#" th:href="@{/myPage/review}">구매후기</a>
@@ -139,7 +185,7 @@
                 </div>
                 <div class="col-xs-10">
                     <strong>
-                        <p th:text="${member.username}" style="font-size: 60px">
+                        <p th:text="${member.userName}" style="font-size: 60px">
                         </p>
                     </strong>
                 </div>
@@ -147,6 +193,23 @@
         </div>
     </div>
 
+    <div th:fragment="myPage_menu">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+            <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+            <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+        </div>
+    </div>
+
+
+    <div th:fragment="myPage-menu-content">
+        <div class="tab-content">
+            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">ggg2</div>
+            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">ggg33</div>
+            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">ggg4</div>
+        </div>
+    </div>
 
 
     <script type="application/javascript" th:fragment="form-validation">

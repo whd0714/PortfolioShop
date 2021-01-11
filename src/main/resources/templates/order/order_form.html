@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+</head>
+<body>
+
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments.html :: login-nav"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                {카테고리 자리}
+            </div>
+            <div class="col-10">
+                <div>
+                    Order / Payment 주문/결제
+                </div>
+
+                <hr class="my-2">
+
+                <div class="row">
+                    <div>
+                        Recipient Info 수령자 정보
+                    </div>
+                </div>
+
+                <hr class="my-2">
+
+                <div class="row col-12">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td colspan="3">배송지 선택</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">수령인</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">배송지주소</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">전화번호</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">배송 메모</td>
+                            <td>1</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="my-2">
+
+                <div class="row">
+                    Product Info 상품 정보
+                </div>
+
+                <div class="row col-12" th:if="${!goodsAndCountLIst.isEmpty()}">
+                    <table class="table table-bordered" th:each="goodsAndCount : ${goodsAndCountLIst}">
+                        <tbody>
+                        <tr>
+                            <td colspan="4" th:text="${goodsAndCount.getCount()}">주문수량</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4" th:text="${goodsAndCount.getGoods().getItem().getTitle()}">제품명</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4" th:text="${goodsAndCount.getGoods().getSize()}">사이즈</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row" th:if="${!goodsAndCountLIst.isEmpty()}">
+                    <form th:action="@{/order/createOrderItem}" th:object="${goodsInfoDto}" method="post">
+                        <div class="form-group">
+                            <span th:each="goodsAndCount : ${goodsAndCountLIst}">
+                                <input type="text" th:name="id" th:value="${goodsAndCount.getGoods().getId()}"
+                                       class="form-control" hidden>
+                            <input type="text" th:name="count" th:value="${goodsAndCount.getCount()}"
+                                   class="form-control" hidden>
+                            </span>
+                            <button class="btn btn-dark btn-block btn-large" type="submit">
+                                주문하기
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+
+</body>
+</html>

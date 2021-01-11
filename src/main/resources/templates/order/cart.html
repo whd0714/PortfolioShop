@@ -26,9 +26,10 @@
 
                 <hr class="my-2">
 
-                <div class="row">
-                    <table class="table">
-                        <thead class="table-light">
+                <form th:action="@{/order/cart_order_form}" th:object="${itemSelectDto}" method="post">
+                    <div class="row" th:if="${!cart.getCartGoodsList().isEmpty()}">
+                        <table class="table">
+                            <thead class="table-light">
                             <tr>
                                 <td>
                                     번호
@@ -45,13 +46,48 @@
                                 <td>
                                     주문금액
                                 </td>
+                                <td>
+                                    사이즈
+                                </td>
+                                <td>
+                                    주문관리
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody th:each="cartGoodList : ${cart.getCartGoodsList()}">
+                            <tr>
+                                <td>
+                                    번호
+                                </td>
+                                <input type="text" th:value="${cartGoodList.getGoods().getItem().itemName}" th:name="name" class="form-control" hidden>
+                                <input type="text" th:value="${cartGoodList.getCount()}" th:name="count" class="form-control" hidden>
+                                <input type="text" th:value="${cartGoodList.getGoods().getSize()}" th:name="size" class="form-control" hidden>
+                                <td th:text="${cartGoodList.getGoods().getItem().title}" >
+                                    상품명(옵션)
+                                </td>
+                                <td th:text="${cartGoodList.getGoods().getItem().getPrice()}">
+                                    판매가
+                                </td>
+                                <td th:text="${cartGoodList.getCount()}">
+                                    수량
+                                </td>
+                                <td th:text="${cartGoodList.getGoods().getItem().getPrice() * cartGoodList.getCount()}">
+                                    주문금액
+                                </td>
+                                <td th:text="${cartGoodList.getGoods().getSize()}">
+                                    사이즈
+                                </td>
+                                <td>
+                                    주문관리
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-dark" type="submit">주문하기</button>
+                </form>
 
-                        </tbody>
-                    </table>
-                </div>
+
             </div>
         </div>
 
