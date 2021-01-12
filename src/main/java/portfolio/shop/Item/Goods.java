@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import portfolio.enumType.StockStatus;
 import portfolio.shop.exception.OutOfStockException;
+import portfolio.shop.setting.BaseTime;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Goods {
+public class Goods extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "goods_id")

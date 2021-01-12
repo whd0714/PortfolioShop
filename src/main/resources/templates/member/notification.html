@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+</head>
+<body>
+
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments.html :: myPage-nav"></div>
+
+    <div th:replace="fragments.html :: myPage-setting-nav"></div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <div th:replace="fragments.html :: settings-menu(currentMenu='notification')"></div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <h2 class="col-12">
+                    알림
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td colspan ="4">내용</td>
+                                <td colspan="4">날짜</td>
+                            </tr>
+                        </thead>
+                        <div th:if="${orderList != null}" >
+                            <div th:each="order : ${orderList}">
+                                <tbody th:each="orderItem : ${order.getOrderItems()}">
+                                    <tr>
+                                        <td colspan="4">
+                                        <span th:each="orderItem : ${order.getOrderItems()}">
+                                            <div th:if="${orderItem.getGoods().getItem().getItemImg() == null}"></div>
+                                            <div>
+                                               <i class="fa fa-shopping-cart"></i> 구매정보
+                                            </div>
+                                            <span th:text="${orderItem.getGoods().getItem().getTitle()}"></span> 주문이 완료되었습니다.
+                                        </span>
+                                        </td>
+                                        <td colspan="4" th:text="${#temporals.format(order.getCreatedDate(), 'yyyy.MM.dd HH:mm')}">날짜</td>
+                                    </tr>
+                                </tbody>
+                            </div>
+                        </div>
+                    </table>
+                </h2>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

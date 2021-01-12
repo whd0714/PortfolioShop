@@ -93,15 +93,19 @@
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="#" th:href="@{/#}" th:if="${orderList != null}">
                         <div th:each="order : ${orderList}">
-                            <p></p>
                             <span th:each="orderItem : ${order.getOrderItems()}">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span th:text="${orderItem.getGoods().getItem().getItemName()}"></span> 주문이 완료되었습니다.
+                                <div th:if="${orderItem.getGoods().getItem().getItemImg() == null}"></div>
+                                <div>
+                                   <i class="fa fa-shopping-cart"></i> 구매정보
+                                </div>
+                                <span th:text="${orderItem.getGoods().getItem().getTitle()}"></span> 주문이 완료되었습니다.
+                                </span>
+                                <div th:text="${#temporals.format(order.getCreatedDate(), 'yyyy.MM.dd HH:mm')}"></div>
                             </span>
                             <hr class="my-2">
                         </div>
                         <div>
-                            <a th:href="@{/myPage}">전체보기</a>
+                            <a th:href="@{/myPage/notification}">전체보기</a>
                         </div>
                     </a>
                 </div>
@@ -146,7 +150,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="color:black;" th:href="@{/cart}">장바구니</a>
+                <a class="nav-link" style="color:black;" th:href="@{/cart}">
+                    장바구니 (<span th:text="${totalCount}"></span>)
+                </a>
             </li>
             <li class="nav-item">
                 <form class="form-inline" action="#" th:action="@{/logout}" method="post">
@@ -193,22 +199,23 @@
         </div>
     </div>
 
-    <div th:fragment="myPage_menu">
-        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-            <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-            <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-            <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-        </div>
+    <div th:fragment="settings-menu (currentMenu)" class="myPage">
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/myPage}">프로필</a>
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notification'}? active" href="#" th:href="@{/myPage/notification}">알림</a>
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'keyword'}? active" href="#" th:href="@{/myPage/keyword}">키워드 설정</a>
+        <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'account'}? active" href="#" th:href="@{/settings/account}">계정</a>
     </div>
-
 
     <div th:fragment="myPage-menu-content">
         <div class="tab-content">
-            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">ggg2</div>
-            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">ggg33</div>
-            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">ggg4</div>
+            <!-- 각 탭이 선택되면 보여지는 내용이다. 태그는 div이고 클래스는 tab-pane이다. -->
+            <!-- active 클래스는 현재 선택되어 있는 탭 영역이다. -->
+            <div class="tab-pane fade in active" id="home" >Home 메뉴</div>
+            <!-- id는 고유한 이름으로 설정하고 tab의 href와 연결되어야 한다. -->
+            <div class="tab-pane fade" id="profile">Profile 메뉴</div>
+
         </div>
+
     </div>
 
 

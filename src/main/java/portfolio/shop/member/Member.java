@@ -7,6 +7,7 @@ import lombok.ToString;
 import portfolio.shop.cart.Cart;
 import portfolio.shop.delivery.Address;
 import portfolio.shop.order.Order;
+import portfolio.shop.setting.BaseTime;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(of = {"id", "loginId", "userName", "password", "email", "joinAt", "profileImg"})
-public class Member {
+public class Member extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -51,5 +52,9 @@ public class Member {
 
     public void settingSignUp() {
         this.joinAt = LocalDateTime.now();
+    }
+
+    public void changeCart(Cart cart) {
+        this.cart = cart;
     }
 }

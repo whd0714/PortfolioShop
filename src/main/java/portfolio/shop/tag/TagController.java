@@ -1,21 +1,22 @@
 package portfolio.shop.tag;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import portfolio.shop.member.CurrentUser;
+import portfolio.shop.member.Member;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Controller
+@RequiredArgsConstructor
 public class TagController {
 
-    @Id @GeneratedValue
-    private Long id;
+    @GetMapping("/myPage/keyword")
+    public String keywordFormView(@CurrentUser Member member, Model model) {
+        if (member != null) {
+            model.addAttribute(member);
+        }
 
-    private String tagName;
-
+        return "member/keyword";
+    }
 }

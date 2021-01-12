@@ -29,11 +29,13 @@ public class Cart {
 
     public Cart(Member member) {
         this.member = member;
+        member.changeCart(this);
     }
 
     public void removeCartGoods(CartGoods... cartGoods) {
         cartGoodsList.remove(cartGoods);
     }
+
 
 
 }

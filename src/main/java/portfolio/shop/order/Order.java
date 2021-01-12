@@ -7,6 +7,7 @@ import portfolio.shop.cart.Cart;
 import portfolio.shop.delivery.Delivery;
 import portfolio.shop.member.Member;
 import portfolio.shop.orderItem.OrderItem;
+import portfolio.shop.setting.BaseTime;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Orders")
-public class Order {
+public class Order extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "order_id")
@@ -42,9 +43,14 @@ public class Order {
     private Delivery delivery;
 
     public Order(OrderItem orderItem, Member member) {
-        this.member = member;
+        changeMember(member);
         settingOrder(orderItem);
         addDeliveryPrice();
+    }
+
+    private void changeMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
     }
 
     private void addOrderItem(OrderItem orderItem){
