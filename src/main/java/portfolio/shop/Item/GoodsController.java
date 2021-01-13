@@ -4,13 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import portfolio.shop.Item.dto.GoodsAndCount;
-import portfolio.shop.Item.dto.GoodsInfoDto;
-import portfolio.shop.Item.dto.ItemFormDto;
-import portfolio.shop.Item.dto.ItemSelectDto;
+import org.springframework.web.bind.annotation.*;
+import portfolio.shop.Item.dto.*;
 import portfolio.shop.cart.CartService;
 import portfolio.shop.member.CurrentUser;
 import portfolio.shop.member.Member;
@@ -144,6 +139,36 @@ public class GoodsController {
         model.addAttribute(new GoodsInfoDto());
 
         return "order/order_form";
+    }
+
+    @GetMapping("/goods/{itemId}/setting")
+    public String viewGoodsSettingForm(@PathVariable("itemId") Long itemId, @CurrentUser Member member,
+                                       Model model) {
+        if (member != null) {
+            model.addAttribute(member);
+        }
+        Optional<Item> findItem = itemRepository.findById(itemId);
+
+        findItem.ifPresent(item -> {
+            model.addAttribute(item);
+
+            List<Goods> goodsList = goodsRepository.findByItemId(itemId);
+            model.addAttribute("goodsList",goodsList);
+        });
+        
+        return "item/itemModificationView";
+    }
+
+    @PostMapping("/goods/setCount")
+    @ResponseBody
+    public int setCount(@CurrentUser Member member, @RequestBody SetCountDto setCountDto){
+
+        Goods goods = goodsRepository.findByItemIdAndSize(setCountDto.getName(), setCountDto.getSize());
+
+        int count = goods.getCount();
+
+        return count;
+
     }
 
 }

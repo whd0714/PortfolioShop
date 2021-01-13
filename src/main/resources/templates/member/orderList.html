@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+</head>
+<body>
+
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments.html :: myPage-nav"></div>
+
+    <div th:replace="fragments.html :: myPage-setting-nav"></div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <div th:replace="fragments.html :: settings-menu(currentMenu='orderList')"></div>
+        </div>
+        <div class="col-8">
+            <div class="row justify-content-center">
+                <h2 class="col-12">
+                    주문내역 조회
+                    <div>
+                        {날짜조회 페이징}
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td colspan ="4">상품정보</td>
+                                <td colspan="4">주문일자</td>
+                                <td colspan="4">주문번호</td>
+                                <td colspan="4">주문금액(수량)</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div th:if="${orderList != null}">
+                                <div th:each="order : ${orderList}">
+                                    <tr th:each="orderItem : ${order.getOrderItems()}">
+                                        <td colspan="4">
+                                            <div th:if="${orderItem.getGoods().getItem().getItemImg() == null}">
+                                                <span th:text="${orderItem.getGoods().getItem().getItemImg()}"></span>
+                                            </div>
+                                            <span th:text="${orderItem.getGoods().getItem().getBrandName()}"></span><br/>
+                                            <a class="font-color-black" th:href="@{'/goods/' + ${orderItem.getGoods().getItem().getId()}}">
+                                                <span th:text="${orderItem.getGoods().getItem().getTitle()}"></span><br/>
+                                            </a>
+                                            사이즈 : <span th:text="${orderItem.getGoods().getSize()}"></span>
+                                        </td>
+
+                                        <td colspan="4" th:text="${#temporals.format(order.getCreatedDate(), 'yyyy.MM.dd')}">
+                                            날짜
+                                        </td>
+                                        <td colspan="4" >
+                                            <a class="font-color-black" th:href="@{/myPage/orderList/detail}" th:text="${order.getId()}"></a>
+                                        </td>
+                                        <td colspan="4">
+                                            <span th:text="${orderItem.getOrderPrice()}"></span>원<br/>
+                                            (<span th:text="${orderItem.getCount()}"></span>)
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                </h2>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -29,7 +29,7 @@ public class OrderService {
 
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
-
+/*
     public void order(Long orderItemId, Member member) {
         Optional<OrderItem> orderItem = orderItemRepository.findById(orderItemId);
         orderItem.ifPresent(oi -> {
@@ -43,6 +43,6 @@ public class OrderService {
             goods.removeStock(oi.getCount());
         });
 
-    }
+    }*/
 
 }

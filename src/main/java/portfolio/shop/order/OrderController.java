@@ -21,6 +21,7 @@ import portfolio.shop.orderItem.OrderItem;
 import portfolio.shop.orderItem.OrderItemRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,7 @@ public class OrderController {
         }
 
         List<Long> goodsId = goodsInfoDto.getId();
+        List<OrderItem> orderItemList = new ArrayList<>();
 
         for (int i = 0; i < goodsId.size(); i++) {
 
@@ -58,9 +60,7 @@ public class OrderController {
             orderItem.settingPrice(goodsInfoDto.getCount().get(i), goods.getItem().getPrice());
             orderItemRepository.save(orderItem);
 
-            Order order = new Order(orderItem, member);
-            orderRepository.save(order);
-            orderItem.changeOrder(order);
+            orderItemList.add(orderItem);
 
             Cart cart = cartRepository.findByMember(member.getId());
 
@@ -74,6 +74,9 @@ public class OrderController {
             }
 
         }
+
+        Order order = new Order(member, orderItemList);
+        orderRepository.save(order);
 
         return "order/complete_form";
     }

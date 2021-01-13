@@ -12,6 +12,7 @@ import portfolio.shop.setting.BaseTime;
 import javax.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -42,9 +43,19 @@ public class Order extends BaseTime {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    public Order(OrderItem orderItem, Member member) {
+  /*  public Order(OrderItem orderItem, Member member) {
         changeMember(member);
         settingOrder(orderItem);
+        addDeliveryPrice();
+    }*/
+
+    public Order(Member member, List<OrderItem> orderItemList
+    ) {
+        changeMember(member);
+        for (OrderItem orderItem : orderItemList) {
+            settingOrder(orderItem);
+            changeOrderItem(orderItem);
+        }
         addDeliveryPrice();
     }
 
@@ -68,6 +79,12 @@ public class Order extends BaseTime {
     private void addDeliveryPrice() {
         orderPrice = orderPrice + deliveryPrice;
     }
+
+    /*public void settingOrder(OrderItem orderItem) {
+        this.count = this.count + orderItem.getCount();
+        this.orderPrice = this.orderPrice + orderItem.getOrderPrice();
+        addPrice();
+    }*/
 
     public void settingOrder(OrderItem orderItem) {
         this.count = this.count + orderItem.getCount();

@@ -17,14 +17,121 @@
         <div class="col-8">
             <div class="row">
                 <h2 class="col-12">
-                    키워드
+                    <div>
+                        <div>
+                            Brand keyword
+                        </div>
+                        <div>
+                            <div id="result2"></div>
+                            <input type="text" id="keyword" placeholder="키워드를 입력하세요">
+                            <button id="btn">추가</button>
+                        </div>
+                        <div>
+                            <div th:if="${!tagList.isEmpty()}">
+                            <div th:each="tag : ${tagList}">
+                                <div id="result" class="badge bg-primary" th:text="${tag.getTagName()}"></div>
+                            </div>
+                            </div>
+                            <div id="con"></div>
+                        </div>
+                    </div>
                 </h2>
-            </div>
-            <div class="row">
-
             </div>
         </div>
     </div>
+    <script type="application/javascript" th:inline="javascript">
+        $(function() {
+            var csrfToken = /*[[${_csrf.token}]]*/ null;
+            var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            });
+        });
+    </script>
+   <!-- <script>
+        $('#btn').on('click', function (){
+            var keyword = $('#keyword').val();
+
+            $.ajax({
+                dataType: "json"
+                /*dataType: "text"*/,
+                contentType: "application/json; charset=utf-8",
+                url: "brandTag",
+                type: "POST",
+                data: JSON.stringify(keyword),
+                success: function (key){
+                    $("#con").html("");
+                    $("<table/>").css({
+                        backgroundColor : "#E4F7BA",
+                        border : "solid 3px #E4F7BA",
+                    }).appendTo("#con"); // 테이블을 생성하고 그 테이블을 div에 추가함
+                    var aa = JSON.stringify(key);
+                    var keys = Object.keys(key["result"][0]);
+                    $("<tr>" , {
+                        html : "<td>" + keys[0] + "</td>"+  // 컬럼명들
+                            "<td>" + keys[1] + "</td>"+
+                            "<td>" + keys[2] + "</td>"
+                    }).appendTo("table") // 이것을 테이블에붙임
+
+                    $.each(key.result, function(index, result) { // 이치를 써서 모든 데이터들을 배열에 넣음
+                        var items = [];
+                        items.push("<td>" + result.id + "</td>");
+                        items.push("<td>" + result.tagName + "</td>");
+                        items.push("<td>" + result.tagType + "</td>");
+                        $("<tr/>", {
+                            html : items // 티알에 붙임,
+                        }).appendTo("table"); // 그리고 그 tr을 테이블에 붙임
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("ERROR : " + textStatus + " : " + errorThrown);
+                }
+            });
+            $("#con")
+        });
+    </script>-->
+    <script>
+        $('#btn').on('click', function (){
+            var keyword = $('#keyword').val();
+            $('#result').hide();
+            $.ajax({
+                dataType: "json"
+                /*dataType: "text"*/,
+                contentType: "application/json; charset=utf-8",
+                url: "brandTag",
+                type: "POST",
+                data: JSON.stringify(keyword),
+                success: function (key){
+                    $("#con").html("");
+                    var keyName = key.result.name;
+                    var keys = Object.keys(key["result"][0]);
+
+                    $("<span/>").appendTo("#con");
+
+                    $.each(key.result, function(index, result) { // 이치를 써서 모든 데이터들을 배열에 넣음
+                        var items = [];
+                        items.push(result.tagName);
+                        $("<span/>", {
+                            html : items // 티알에 붙임,
+                        }).appendTo("span"); // 그리고 그 tr을 테이블에 붙임
+                    });
+
+                },
+
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("ERROR : " + textStatus + " : " + errorThrown);
+                }
+            });
+            $("#con")
+        });
+    </script>
+
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
 
 </body>
 </html>
