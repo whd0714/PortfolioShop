@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+</head>
+<body>
+
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments.html :: login-nav"></div>
+
+    <hr class="my-2">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                {카테고리 자리}
+            </div>
+            <div class="col-10" >
+                <div th:replace="fragments.html :: goods-menu(currentMenu='info')"></div>
+                <div class="row">
+                    {브랜드 로고자리}
+                </div>
+                <div class="row">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb" style="background: none; color: lightgray;">
+                            <li class="breadcrumb-item"><a href="#"><span th:text="${item.getBrandName()}"></span></a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="#"><span th:text="${item.getItemType()}"></span></a></li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="row ml-2">
+                   <strong><h4 th:text="${item.getTitle()}"></h4></strong>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {사진}
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                           <p><strong style="font-size: 25px;">Product Info</strong> 제품정보</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 bc-icons">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1" >
+                                        <li class="breadcrumb-item">브랜드</li>
+                                        <li class="breadcrumb-item">품번</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col bc-icons">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1" >
+                                        <li class="breadcrumb-item active" th:text="${item.brandName}"></li>
+                                        <li class="breadcrumb-item active" th:text="${item.itemName}"></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item">조회수(1개월)</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item">{조회수 데이터}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item">누적판매(1개월)</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item">{누적판매 데이터}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item"> 좋아요</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item fa fa-gratipay s2"> {좋아요수}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item">구매후기</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1">
+                                        <li class="breadcrumb-item"> {구매후기}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {태그}
+                        </div>
+
+                        <hr class="my-2">
+
+                        <div class="row">
+                            <p><strong style="font-size: 25px;">Price Info</strong> 가격정보</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 bc-icons">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1" >
+                                        <li class="breadcrumb-item">
+                                             판매가
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col bc-icons">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb s1" >
+                                        <li class="breadcrumb-item active" th:text="${item.price}"></li>원
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <hr class="my-2">
+
+                        <div class="row col-6">
+                            <form th:action="@{/order/order_form}" th:object="${itemSelectDto}"
+                            novalidate method="post">
+                                <div class="form-group">
+                                    <input type="text" id="itemName" th:name="name" th:value="${item.getItemName()}" class="form-control" hidden>
+                                    <input type="text" id="itemId" th:value="${item.getId()}" hidden>
+                                </div>
+                                <div class="form-group" >
+                                    <select class="wi" name="itemType" id="itemType" onchange="selectValue();" th:name="size">
+                                        <option value="">옵션선택</option>
+                                            <option th:each="item : ${goodsList}"
+                                                    th:value="${item.size}"
+                                                    th:text="${item.size}"
+                                                    th:field="*{size}"
+                                            />
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input class="wi"  id="maxCount" type="number" text="0" onclick="limitCount();" th:name="count" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-dark btn-block btn-large" style="width: 250px;" type="submit">즉시구매</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col">
+                            <form th:action="@{/cart/add}" method="post" th:object="${itemSelectDto}">
+                                <input type="text" th:name="name" th:value="${item.getItemName()}" class="form-control" hidden>
+
+                                <input type="text" id="result" th:name="size" hidden>
+                                <input type="text" id="result2" th:name="count" hidden>
+                                <button class="btn btn-dark btn-block btn-large" onclick="getInputValue();" type="submit">
+                                    {장바구니이미지}
+                                </button>
+                            </form>
+                            <button class="btn" onclick="changeWish();">
+                                <i class="fa fa-gratipay"></i>
+                            </button>
+                               <!-- <a th:href="@{/cart/add}"><i class="fa fa-shopping-bag"></i></a>-->
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-2">
+                Info 정보
+                <div>
+                    {info}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript" th:inline="javascript">
+        $(function() {
+            var csrfToken = /*[[${_csrf.token}]]*/ null;
+            var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+            function getInputValue() {
+                var s = document.getElementById("itemType");
+                const  itemType = s.options[s.selectedIndex].value;
+                const  count = $('#maxCount').val();
+
+                var cc = Number(count);
+
+                document.getElementById("result").value = itemType;
+                document.getElementById("result2").value = cc;
+            }
+
+            function limitCount() {
+                $("#available_seats")
+            }
+
+            function selectValue(){
+                var s = document.getElementById("itemType");
+                const  itemType = s.options[s.selectedIndex].value;
+
+                var value = $('#itemName').val();
+
+                var data = {"name" : value, "size" : itemType};
+
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: "setCount",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    success : function (count){
+                    abc(count);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert("ERROR : " + textStatus + " : " + errorThrown);
+                    }
+                });
+            }
+            function abc (count) {
+                $("#maxCount").attr("max", count);
+            };
+
+            function changeWish(){
+
+                var value = $('#itemName').val();
+                var data = {"name" : value};
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    url: "addWish",
+                    type: "POST",
+                    data: JSON.stringify(data),
+
+                    success : function (totalCount){
+                        alert(totalCount);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert("ERROR : " + textStatus + " : " + errorThrown);
+                    }
+                });
+            }
+    </script>
+
+</body>
+</html>
