@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import portfolio.enumType.ItemType;
+import portfolio.shop.tagItem.TagItem;
+import portfolio.shop.wish.Wish;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +31,12 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<Goods> goods = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item")
+    private List<Wish> wishes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item")
+    private List<TagItem> tagItems = new ArrayList<>();
 
     public Item(String brandName, String itemName, String itemImg, ItemType itemType, int price, String title) {
         this.brandName = brandName;

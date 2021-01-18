@@ -36,6 +36,13 @@
        .font-color-black{
            color: black;
        }
+       .wi{
+           width: 300px;
+       }
+       .card-horizontal {
+           display: flex;
+           flex: 1 1 auto;
+       }
     </style>
 </head>
 <body>
@@ -209,6 +216,7 @@
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'orderList'}? active" href="#" th:href="@{/myPage/orderList}">주문내역</a>
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notification'}? active" href="#" th:href="@{/myPage/notification}">알림</a>
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'keyword'}? active" href="#" th:href="@{/myPage/keyword}">키워드 설정</a>
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'wish'}? active" href="#" th:href="@{/myPage/wish}">좋아요</a>
     </div>
 
     <div th:fragment="goods-menu (currentMenu)" class="justify-content-center">
@@ -225,7 +233,7 @@
     <div th:fragment="goods-settings-menu (currentMenu)" class="goodsSetting">
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'item'}? active" href="#" th:href="@{'/goods/' + ${item.getId()} + '/setting'}">상품정보</a>
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'info'}? active" href="#" th:href="@{'/goods/' + ${item.getId()} + '/setting/info'}">상품소개</a>
-        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tag'}? active" href="#" th:href="@{'/goods/' + ${item.getId()} + '/setting/tag'}">태그 설정</a>
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tag'}? active" href="#" th:href="@{'/goods/' + ${item.getId()} + '/setting/tags'}">태그 설정</a>
     </div>
 
     <script type="application/javascript" th:fragment="form-validation">

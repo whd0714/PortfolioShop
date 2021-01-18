@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+</head>
+<body>
+
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div th:replace="fragments.html :: myPage-nav"></div>
+
+    <div th:replace="fragments.html :: myPage-setting-nav"></div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <div th:replace="fragments.html :: settings-menu(currentMenu='wish')"></div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <h2 class="col-12">
+                    <div>
+                        <div>
+                            좋아요
+                        </div>
+                        <hr class="my-2">
+                        <div>
+                            <div class="card" style="width: 300px;">
+                                <div class="card-horizontal">
+                                    <div class="img-square-wrapper">
+                                        <img class="" src="http://via.placeholder.com/100X130" alt="Card image cap">
+                                    </div>
+                                    <div class="card-body">
+                                        <p style="font-size: 10px;" class="card-text">Some quick example</p>
+                                        <p style="font-size: 10px;" class="card-text">Some quick example</p>
+                                        <p style="font-size: 10px;" class="card-text">Some quick example</p>
+                                        <p style="font-size: 10px;" class="card-text">Some quick example</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript" th:inline="javascript">
+        $(function() {
+            var csrfToken = /*[[${_csrf.token}]]*/ null;
+            var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            });
+        });
+    </script>
+
+</body>
+</html>

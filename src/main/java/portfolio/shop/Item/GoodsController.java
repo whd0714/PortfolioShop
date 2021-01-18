@@ -161,7 +161,7 @@ public class GoodsController {
 
     @PostMapping("/goods/setCount")
     @ResponseBody
-    public int setCount(@CurrentUser Member member, @RequestBody SetCountDto setCountDto){
+    public int setCount(@RequestBody SetCountDto setCountDto){
 
         Goods goods = goodsRepository.findByItemIdAndSize(setCountDto.getName(), setCountDto.getSize());
 

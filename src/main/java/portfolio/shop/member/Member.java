@@ -8,6 +8,7 @@ import portfolio.shop.cart.Cart;
 import portfolio.shop.delivery.Address;
 import portfolio.shop.order.Order;
 import portfolio.shop.setting.BaseTime;
+import portfolio.shop.wish.Wish;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,6 +44,9 @@ public class Member extends BaseTime {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Wish> wishes = new ArrayList<>();
+
     public Member(String loginId, String userName, String password, String email) {
         this.loginId = loginId;
         this.userName = userName;
@@ -57,4 +61,5 @@ public class Member extends BaseTime {
     public void changeCart(Cart cart) {
         this.cart = cart;
     }
+
 }

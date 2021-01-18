@@ -26,10 +26,12 @@
                             <input type="text" id="keyword" placeholder="키워드를 입력하세요">
                             <button id="btn">추가</button>
                         </div>
-                        <div>
+                        <div id="result3">
                             <div th:if="${!tagList.isEmpty()}">
                             <div th:each="tag : ${tagList}">
-                                <div id="result" class="badge bg-primary" th:text="${tag.getTagName()}"></div>
+                                <div id="result" class="badge bg-primary">
+                                    <span id="tagName" th:value="${tag.getTagName()}"  th:text="${tag.getTagName()}"></span> <button th:id="delBtn" id="delBtn" class="btn">X</button>
+                                </div>
                             </div>
                             </div>
                             <div id="con"></div>
@@ -88,12 +90,12 @@
                 }
             });
             $("#con")
+
         });
     </script>-->
-    <script>
+    <!--<script>
         $('#btn').on('click', function (){
             var keyword = $('#keyword').val();
-            $('#result').hide();
             $.ajax({
                 dataType: "json"
                 /*dataType: "text"*/,
@@ -102,6 +104,8 @@
                 type: "POST",
                 data: JSON.stringify(keyword),
                 success: function (key){
+                    $('#result3').children().remove();
+                    $("#result3").load("/keyword");
                     $("#con").html("");
                     var keyName = key.result.name;
                     var keys = Object.keys(key["result"][0]);
@@ -110,6 +114,8 @@
 
                     $.each(key.result, function(index, result) { // 이치를 써서 모든 데이터들을 배열에 넣음
                         var items = [];
+
+
                         items.push(result.tagName);
                         $("<span/>", {
                             html : items // 티알에 붙임,
@@ -123,6 +129,58 @@
                 }
             });
             $("#con")
+        });
+    </script>-->
+
+    <script>
+        $('#btn').on('click', function (){
+            var keyword = $('#keyword').val();
+
+            $.ajax({
+                dataType: "json"
+                /*dataType: "text"*/,
+                contentType: "application/json; charset=utf-8",
+                url: "brandTag",
+                type: "POST",
+                data: JSON.stringify(keyword),
+                success: function (key){
+                   /* $("#con").html("");
+                    $('#result3').children().remove();
+                    $("#result3").load(key.result);*/
+                    $('#result3').html("");
+
+                    console.log(key);
+
+                    $.each(key, function (index, data){
+                        $("#result3").append("<div class=\"badge bg-primary\">"+data.tagName+"</div> <br/>");
+                    })
+
+
+                    /*$.each(key.result, function(index, result) { // 이치를 써서 모든 데이터들을 배열에 넣음
+
+                        console.log("result");
+                        console.log(result.tagName);
+
+
+                    })*/
+                }
+             });
+        });
+
+        $('#delBtn').on('click', function (){
+            var tagName = $('#tagName').val();
+            console.log(tagName);
+            $.ajax({
+               dataType: "json",
+               contentType: "application/json; charset=utf-8",
+               data: JSON.stringify(tagName),
+               url: "tagDelte",
+               type: "POST",
+                success: function(){
+
+            }
+
+            });
         });
     </script>
 

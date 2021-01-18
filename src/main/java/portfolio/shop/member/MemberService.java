@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import portfolio.shop.cart.Cart;
 import portfolio.shop.cart.CartRepository;
 import portfolio.shop.member.dto.MemberSignUpDto;
+import portfolio.shop.wish.Wish;
+import portfolio.shop.wish.WishRepository;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
+    private final WishRepository wishRepository;
 
     public void processSignup(MemberSignUpDto memberSignUpDto) {
         String password = passwordEncoder.encode(memberSignUpDto.getPassword());

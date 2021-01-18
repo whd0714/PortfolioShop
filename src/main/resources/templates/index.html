@@ -29,23 +29,27 @@
         </div>
     </div>-->
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div th:each="items : ${allItem}">
-                <a th:href="@{'/goods/'+${items.getId()}}">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span th:text="${items.getBrandName()}"></span>
-                            </h5>
-                            <p class="card-text">
-                                <span th:text="${items.getItemName()}"></span>
-                            </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div class="col-3">
+            </div>
+            <div class="col">
+                <div th:each="items : ${allItem}">
+                    <a th:href="@{'/goods/'+${items.getId()}}">
+                        <div class="card" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="...">
+                            <span class="card-body">
+                                <h5 class="card-title">
+                                    <span th:text="${items.getBrandName()}"></span>
+                                </h5>
+                                <p class="card-text">
+                                    <span th:text="${items.getItemName()}"></span>
+                                </p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </span>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
